@@ -74,7 +74,7 @@ jobs:
 
     Verified successful deployment by checking the S3 bucket.
 
-5. Integrate Cloudflare
+### 5. Integrate Cloudflare
 
     Connected GitHub repository to Cloudflare Pages.
 
@@ -84,7 +84,7 @@ jobs:
 
     https://<project-name>.pages.dev
 
-6. Test Auto-Deployment
+### 6. Test Auto-Deployment
 
     Made a change in index.html.
 
