@@ -34,60 +34,27 @@ The final setup ensures that every GitHub push triggers an automated deployment 
 
 ### 2. Push Website Code to GitHub
 - Initialized a Git repository.  
-- Pushed the static site files to GitHub.
+- Pushed the static site files to GitHub.  
 
 ### 3. Configure AWS S3
 - Created an **S3 bucket** for hosting.  
 - Enabled **static website hosting**.  
 - Configured **bucket policy** to allow public read access.  
-- Created an **IAM User with programmatic access** for GitHub Actions.
+- Created an **IAM User with programmatic access** for GitHub Actions.  
 
 ### 4. Set Up GitHub Actions
-Created `.github/workflows/deploy.yml`:
-
-```yaml
-name: Deploy to S3
-
-on:
-  push:
-    branches:
-      - main
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
-
-      - name: Sync files to S3
-        run: aws s3 sync ./ s3://<your-bucket-name> --delete
-
-    Added AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY as GitHub Secrets.
-
-    Verified successful deployment by checking the S3 bucket.
+- Created a workflow file in `.github/workflows/deploy.yml`.  
+- Added `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` as GitHub Secrets.  
+- Verified successful deployment by checking the S3 bucket.  
 
 ### 5. Integrate Cloudflare
-
-    Connected GitHub repository to Cloudflare Pages.
-
-    Set build output directory to / (root).
-
-    Cloudflare automatically generated a free HTTPS-enabled URL:
-
-    https://<project-name>.pages.dev
+- Connected GitHub repository to **Cloudflare Pages**.  
+- Set build output directory to `/` (root).  
+- Cloudflare automatically generated a free HTTPS-enabled URL:  
+  `https://<project-name>.pages.dev`  
 
 ### 6. Test Auto-Deployment
+- Made a change in `index.html`.  
+- Committed and pushed to GitHub.  
+- Verified that the live site was updated automatically with HTTPS.  
 
-    Made a change in index.html.
-
-    Committed and pushed to GitHub.
-
-    Verified that the live site was updated automatically with HTTPS
